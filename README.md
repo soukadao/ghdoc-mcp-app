@@ -11,6 +11,22 @@ npm run build    # Build UI into dist/mcp-app.html
 npm run serve    # Start server on http://localhost:3001/mcp
 ```
 
+## Connect to Claude
+
+1. Start the tunnel:
+   ```bash
+   npx cloudflared tunnel --url http://localhost:3001
+   ```
+
+2. Copy the generated URL (e.g., `https://random-name.trycloudflare.com`)
+
+3. In Claude web, go to **Settings > Connectors > Add custom connector**
+
+4. Enter the URL with `/mcp` path:
+   ```
+   https://<your-url>.trycloudflare.com/mcp
+   ```
+
 ## Packages
 
 ### Dependencies

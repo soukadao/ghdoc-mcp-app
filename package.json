@@ -1,17 +1,28 @@
 {
   "name": "ghdoc-mcp-app",
   "version": "1.0.0",
-  "description": "GitHub style Markdown preview MCP App",
   "type": "module",
+  "description": "GitHub style Markdown preview MCP App",
+  "main": "dist/server.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "INPUT=mcp-app.html vite build",
-    "serve": "npx tsx server.ts"
+    "build": "tsc --noEmit && cross-env INPUT=mcp-app.html vite build && tsc -p tsconfig.server.json && esbuild server.ts --bundle --platform=node --format=esm --packages=external --outfile=dist/server.js && esbuild main.ts --bundle --platform=node --format=esm --packages=external --outfile=dist/index.js --banner:js=\"#!/usr/bin/env node\"",
+    "watch": "cross-env INPUT=mcp-app.html vite build --watch",
+    "serve:http": "npx tsx main.ts",
+    "serve:stdio": "npx tsx main.ts --stdio",
+    "start": "npm run start:http",
+    "start:http": "cross-env NODE_ENV=development npm run build && npm run serve:http",
+    "start:stdio": "cross-env NODE_ENV=development npm run build && npm run serve:stdio",
+    "dev": "cross-env NODE_ENV=development concurrently 'npm run watch' 'npm run serve:http'",
+    "serve": "npx tsx main.ts"
   },
-  "keywords": [],
-  "author": "",
   "dependencies": {
     "@modelcontextprotocol/ext-apps": "^1.0.1",
     "@modelcontextprotocol/sdk": "^1.25.3",
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
     "github-markdown-css": "^5.8.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -26,11 +37,19 @@
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.2",
-    "cors": "^2.8.6",
-    "express": "^5.2.1",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "esbuild": "^0.25.0",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vite-plugin-singlefile": "^2.3.0"
+  },
+  "types": "dist/server.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/server.d.ts",
+      "default": "./dist/server.js"
+    }
   }
 }
