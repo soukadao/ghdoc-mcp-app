@@ -7,8 +7,9 @@ Docs: https://modelcontextprotocol.io/docs/extensions/apps
 ## Usage
 
 ```bash
-npm run build    # Build UI into dist/mcp-app.html
+npm run build    # Build UI and server
 npm run serve    # Start server on http://localhost:3001/mcp
+npm run dev      # Build & serve with watch mode
 ```
 
 ## Connect to Claude
@@ -39,6 +40,7 @@ npm run serve    # Start server on http://localhost:3001/mcp
 | `react-markdown` | Markdown renderer for React |
 | `remark-gfm` | GitHub Flavored Markdown plugin |
 | `github-markdown-css` | GitHub style CSS |
+| `express`, `cors` | HTTP server |
 | `zod` | Schema validation |
 
 ### Dev Dependencies
@@ -48,7 +50,9 @@ npm run serve    # Start server on http://localhost:3001/mcp
 | `vite` | Build tool |
 | `vite-plugin-singlefile` | Bundle into single HTML |
 | `@vitejs/plugin-react` | Vite React plugin |
-| `express`, `cors` | HTTP server |
+| `esbuild` | Server bundler |
+| `concurrently` | Run multiple commands |
+| `cross-env` | Cross-platform env vars |
 | `tsx` | TypeScript execution |
 | `typescript` | TypeScript compiler |
 
@@ -56,6 +60,7 @@ npm run serve    # Start server on http://localhost:3001/mcp
 
 | File | Description |
 |------|-------------|
+| `main.ts` | Entry point (HTTP/stdio transport) |
 | `server.ts` | MCP server with `preview-markdown` tool |
 | `mcp-app.html` | UI entry point |
 | `src/mcp-app.tsx` | React app using `useApp` hook |
@@ -63,3 +68,4 @@ npm run serve    # Start server on http://localhost:3001/mcp
 | `src/global.css` | GitHub markdown styling |
 | `vite.config.ts` | Vite bundler config |
 | `tsconfig.json` | TypeScript config |
+| `tsconfig.server.json` | Server build config |
